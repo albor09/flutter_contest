@@ -31,15 +31,13 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
   bool isValid = false;
 
   void checkIsValid() {
-    if (_moodIndex != -1 &&
-        _subMoodIndex != -1 &&
-        _stressTouched &&
-        _selfRatingTouched &&
-        _noteController.text.trim().isNotEmpty != isValid) {
-      setState(() {
-        isValid = !isValid;
-      });
-    }
+    setState(() {
+      isValid = _moodIndex != -1 &&
+          _subMoodIndex != -1 &&
+          _stressTouched &&
+          _selfRatingTouched &&
+          _noteController.text.trim().isNotEmpty;
+    });
   }
 
   @override
@@ -84,11 +82,11 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
                           MoodList(
                               index: _moodIndex,
                               onChange: (index) {
-                                checkIsValid();
                                 setState(() {
                                   _subMoodIndex = -1;
                                   _moodIndex = index;
                                 });
+                                checkIsValid();
                               }),
                           const SizedBox(height: 16),
                           _moodIndex != -1
@@ -97,10 +95,10 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
                                       mockMoods[_moodIndex].subMoods.length,
                                       (index) => GestureDetector(
                                             onTap: () {
-                                              checkIsValid();
                                               setState(() {
                                                 _subMoodIndex = index;
                                               });
+                                              checkIsValid();
                                             },
                                             child: _SubMoodItem(
                                                 mood: mockMoods[_moodIndex]
@@ -117,8 +115,8 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
                                 value: _stressValue,
                                 anchors: const [1 / 5, 2 / 5, 3 / 5, 4 / 5],
                                 onChange: (value) {
-                                  checkIsValid();
                                   _stressTouched = true;
+                                  checkIsValid();
                                   builder(() {
                                     _stressValue = value;
                                   });
@@ -134,8 +132,8 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
                                 value: _selfRatingValue,
                                 anchors: const [1 / 5, 2 / 5, 3 / 5, 4 / 5],
                                 onChange: (value) {
-                                  checkIsValid();
                                   _selfRatingTouched = true;
+                                  checkIsValid();
                                   builder(() {
                                     _selfRatingValue = value;
                                   });
